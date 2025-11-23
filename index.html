@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>产品补贴价格计算</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="form-card">
+      <header class="form-header">
+        <h1>产品补贴申报</h1>
+        <p class="subtitle">请准确填写以下信息，以便完成补贴价格计算和相关服务受理，我们将依法保护您的个人信息安全。</p>
+      </header>
+      <form id="subsidyForm" novalidate>
+        <div class="form-group">
+          <label for="name">姓名</label>
+          <input id="name" name="name" type="text" placeholder="请输入姓名" required />
+          <div class="error-msg" data-error-for="name"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">手机号码</label>
+          <input id="phone" name="phone" type="tel" placeholder="请输入手机号码" required />
+          <div class="error-msg" data-error-for="phone"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="idCard">身份证号</label>
+          <input id="idCard" name="idCard" type="text" placeholder="请输入身份证号码" required />
+          <div class="error-msg" data-error-for="idCard"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="energyLevel">能效类型</label>
+          <select id="energyLevel" name="energyLevel" required>
+            <option value="">请选择能效类型</option>
+            <option value="1">一级能效（按全国统一价的 80% 计算）</option>
+            <option value="2">二级能效（按全国统一价的 85% 计算）</option>
+          </select>
+          <div class="error-msg" data-error-for="energyLevel"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="price">全国统一价（元）</label>
+          <input id="price" name="price" type="number" step="0.01" min="0" placeholder="请输入商品全国统一价" required />
+          <div class="error-msg" data-error-for="price"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="address">详细地址</label>
+          <textarea id="address" name="address" rows="3" placeholder="请输入详细收货地址" required></textarea>
+          <div class="error-msg" data-error-for="address"></div>
+        </div>
+
+        <div class="agree-row">
+          <label class="agree-label">
+            <input type="checkbox" id="agreePrivacy" name="agreePrivacy" />
+            <span>我已阅读并同意<a href="javascript:void(0);" id="privacyLink">《隐私政策》</a></span>
+          </label>
+          <div class="error-msg" data-error-for="agreePrivacy"></div>
+        </div>
+
+        <button type="submit" class="submit-btn">提交</button>
+        <p class="footnote">
+          提交即表示您已阅读并同意本页面的使用说明及隐私保护原则。
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- 提交成功弹窗 -->
+  <div class="modal" id="successModal" aria-hidden="true">
+    <div class="modal-backdrop" data-modal-close></div>
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <h2 id="modalTitle">提交成功</h2>
+      <p class="modal-text">您的申请已提交成功，以下为补贴价格计算结果：</p>
+      <div class="modal-result">
+        <p><span class="label">能效类型：</span><span id="resultEnergyLevel"></span></p>
+        <p><span class="label">全国统一价：</span>¥<span id="resultOriginalPrice"></span></p>
+        <p><span class="label">补贴后价格：</span>
+          <span class="highlight">¥<span id="resultDiscountedPrice"></span></span>
+        </p>
+      </div>
+      <button type="button" class="modal-close-btn" data-modal-close>知道了</button>
+    </div>
+  </div>
+
+  <!-- 隐私政策弹窗 -->
+  <div class="modal" id="privacyModal" aria-hidden="true">
+    <div class="modal-backdrop" data-modal-close></div>
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="privacyTitle">
+      <h2 id="privacyTitle">隐私政策</h2>
+      <div class="modal-content-scroll">
+        <p><strong>1. 信息收集范围</strong></p>
+        <p>本页面将根据业务需要收集您填写的姓名、手机号码、身份证号码、产品型号、全国统一价及详细地址等信息。</p>
+        <p><strong>2. 信息使用目的</strong></p>
+        <p>您提供的信息将用于开展产品补贴价格计算、资格核验、客户联络及相关服务受理等与本业务直接相关的目的。</p>
+        <p><strong>3. 信息安全保护</strong></p>
+        <p>我们将采取合理可行的安全防护措施，降低您的个人信息被未经授权访问、使用、披露、篡改或丢失的风险。</p>
+        <p><strong>4. 信息共享与披露</strong></p>
+        <p>除依法依规或经您另行授权的情形外，我们不会向无关的第三方提供您的个人信息。如因履行法律法规要求、行政或司法机关要求等必须披露的，我们将在符合法律法规的前提下进行。</p>
+        <p><strong>5. 您的权利</strong></p>
+        <p>在符合法律法规规定的前提下，您有权对您的个人信息进行查询、更正、补充等操作，或通过官方服务渠道申请处理。</p>
+        <p><strong>6. 政策更新</strong></p>
+        <p>随着业务发展及法律法规变化，我们可能适时对本隐私政策进行调整，并在相关页面进行提示或更新说明。</p>
+        <p>如您继续填写并提交信息，即表示您已充分阅读、理解并同意本隐私政策的全部内容。</p>
+      </div>
+      <button type="button" class="modal-close-btn" data-modal-close>我已阅读并同意</button>
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>
